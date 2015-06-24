@@ -24,7 +24,7 @@ public class TwitterKafkaProducer {
 			String token, String secret) throws InterruptedException {
 
 		Properties properties = new Properties();
-		properties.put("metadata.broker.list", "localhost:9092");
+		properties.put("metadata.broker.list", "broker1:9092");
 		properties.put("serializer.class", "kafka.serializer.StringEncoder");
 		properties.put("client.id","camus");
 		ProducerConfig producerConfig = new ProducerConfig(properties);
@@ -34,8 +34,8 @@ public class TwitterKafkaProducer {
 		BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10000);
 		StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
 		// add some track terms
-		endpoint.trackTerms(Lists.newArrayList("twitterapi",
-				"#AAPSweep"));
+		endpoint.trackTerms(Lists.newArrayList("india",
+				"happy"));
 
 		Authentication auth = new OAuth1(consumerKey, consumerSecret, token,
 				secret);
@@ -53,7 +53,9 @@ public class TwitterKafkaProducer {
 		for (int msgRead = 0; msgRead < 1000; msgRead++) {
 			KeyedMessage<String, String> message = null;
 			try {
-				message = new KeyedMessage<String, String>(topic, queue.take());
+			    String msg = queue.take();
+			    System.out.println(msg);
+				message = new KeyedMessage<String, String>(topic, msg);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -66,7 +68,9 @@ public class TwitterKafkaProducer {
 
 	public static void main(String[] args) {
 		try {
-			TwitterKafkaProducer.run(args[0], args[1], args[2], args[3]);
+		    
+			TwitterKafkaProducer.run("aSXmvtJSDlRF5j7j2HuOoW1o1", "I8bP67UExpi8ipMP1rbXuVqOoVGa35uPvqYWGhyVQnRqEReItq", 
+			        "16229305-zL86QBJCjRgsbOGqPj5mctPJvXKKLYn7AA07It5z0", "LOQWou2O8ExPOl4eWpaMBPV8SfnjbltgKRGRS9aE9Tc5w");
 		} catch (InterruptedException e) {
 			System.out.println(e);
 		}

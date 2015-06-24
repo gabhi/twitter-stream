@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+extraProperties=
+projectKey=com.saurzcode.twitter\:twitter-stream
+serverUrl=http\://sonar.prod.walmartlabs.com
+version=2

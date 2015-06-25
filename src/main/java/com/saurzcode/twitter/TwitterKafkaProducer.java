@@ -24,7 +24,7 @@ public class TwitterKafkaProducer {
 			String token, String secret) throws InterruptedException {
 
 		Properties properties = new Properties();
-		properties.put("metadata.broker.list", "broker1:9092");
+		properties.put("metadata.broker.list", "localhost:9092");
 		properties.put("serializer.class", "kafka.serializer.StringEncoder");
 		properties.put("client.id","camus");
 		ProducerConfig producerConfig = new ProducerConfig(properties);
